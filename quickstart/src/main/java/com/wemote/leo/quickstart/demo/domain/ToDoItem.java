@@ -11,16 +11,16 @@ import javax.persistence.Entity;
  */
 @AggregateRoot
 @Entity
-public class ToDoItem extends BaseAggregateRoot {
+public class TodoItem extends BaseAggregateRoot {
 
     private String name;
 
-    public ToDoItem(AggregateId toDoItemId, String name) {
-        this.aggregateId = toDoItemId;
+    public TodoItem(AggregateId todoItemId, String name) {
+        this.aggregateId = todoItemId;
         this.name = name;
     }
 
-    protected ToDoItem() {
+    protected TodoItem() {
     }
 
     public String getName() {

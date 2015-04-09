@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:beans="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd   http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
+        >
+
+    <!-- 自动扫描指定包名 -->
+    <context:component-scan
+            base-package="com.wemote.leo"/>
+
+    <!-- 默认的注解映射的支持，自动注册DefaultAnnotationHandlerMapping -->
+    <!-- Jackson Mapper -->
+    <beans:bean id="jacksonObjectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>
+    <beans:bean
+            class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject" ref="jacksonObjectMapper"/>
+        <property name="targetMethod" value="configure"/>
+        <property name="arguments">
+            <list>
+                <value type="com.fasterxml.jackson.databind.DeserializationFeature">FAIL_ON_UNKNOWN_PROPERTIES</value>
+                <value>false</value>
+            </list>
+        </property>
+    </beans:bean>
+
+    <!-- 集成velocity模板 -->
+    <beans:bean id="velocityConfigurer" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <property name="resourceLoaderPath" value="views/"/>
+        <property name="configLocation" value="classpath:velocity.properties"/>
+    </beans:bean>
+
+    <beans:bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+        <property name="suffix" value=".vm"/>
+        <!-- 使用springMacro、使用servlet的对象 -->
+        <property name="exposeSpringMacroHelpers" value="true"/>
+        <property name="exposeRequestAttributes" value="true"/>
+        <property name="exposeSessionAttributes" value="true"/>
+        <property name="contentType" value="text/html;charset=UTF-8"/>
+        <!-- spring的日期格式化 -->
+    </beans:bean>
+
+    <!-- 总错误处理-->
+    <beans:bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"
+                p:defaultStatusCode="500">
+        <property name="defaultErrorView" value="error/500"/>
+        <property name="warnLogCategory"
+                  value="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"/>
+        <property name="exceptionMappings">
+            <props>
+                <prop key="org.apache.shiro.authz.UnauthorizedException">error/401</prop>
+                <prop key="java.lang.Throwable">error/500</prop>
+            </props>
+        </property>
+    </beans:bean>
+
+    <!-- 视图解释类 -->
+    <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".jsp"/>
+        <!--可为空,方便实现自已的依据扩展名来选择视图解释类的逻辑  -->
+    </beans:bean>
+
+    <!-- 对静态资源文件的访问 -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <!-- 对静态资源文件的访问 -->
+    <mvc:resources mapping="/crossdomain.xml" location="/public/" order="0"/>
+    <mvc:resources mapping="/respond.proxy.gif" location="/public/" order="0"/>
+    <mvc:resources mapping="/respond.proxy.js" location="/public/" order="0"/>
+    <mvc:resources mapping="/respond-proxy.html" location="/public/" order="0"/>
+    <mvc:resources mapping="/favicon.ico" location="/public/" order="0"/>
+    <mvc:resources mapping="/public/**" location="/public/"/>
+
+    <mvc:default-servlet-handler/>
+
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <!-- 将StringHttpMessageConverter的默认编码设为UTF-8 -->
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8"/>
+            </bean>
+            <!-- 将Jackson2HttpMessageConverter的默认格式化输出设为true -->
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="prettyPrint" value="true"/>
+                <property name="objectMapper" ref="jacksonObjectMapper"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!-- 总拦截器（近似） -->
+    <!--<mvc:interceptors/>
+    </mvc:interceptors>-->
+
+    <!-- 定义无需Controller的url<->view直接映射 -->
+    <!--<mvc:view-controller path="/" view-name="redirect:/"/>-->
+
+</beans>

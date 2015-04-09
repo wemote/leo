@@ -3,11 +3,11 @@ package com.wemote.leo.quickstart.demo.readmodel;
 /**
  * @author: jayon.xu@gmail.com
  */
-public class ToDoItemQuery {
+public class TodoItemQuery {
 
     private String name;
 
-    public ToDoItemQuery(String name) {
+    public TodoItemQuery(String name) {
         this.name = name;
     }
 

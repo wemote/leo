@@ -2,9 +2,9 @@ package com.wemote.leo.quickstart.demo.application.handler;
 
 import com.wemote.leo.cqrs.annotation.CommandHandlerAnnotation;
 import com.wemote.leo.cqrs.command.handler.CommandHandler;
-import com.wemote.leo.quickstart.demo.application.api.CreateToDoItemCommand;
-import com.wemote.leo.quickstart.demo.domain.ToDoItem;
-import com.wemote.leo.quickstart.demo.domain.ToDoItemRepository;
+import com.wemote.leo.quickstart.demo.application.api.CreateTodoItemCommand;
+import com.wemote.leo.quickstart.demo.domain.TodoItem;
+import com.wemote.leo.quickstart.demo.domain.TodoItemRepository;
 
 import javax.inject.Inject;
 
@@ -12,14 +12,14 @@ import javax.inject.Inject;
  * @author: jayon.xu@gmail.com
  */
 @CommandHandlerAnnotation
-public class CreateToDoItemCommandHandler implements CommandHandler<CreateToDoItemCommand, Void> {
+public class CreateTodoItemCommandHandler implements CommandHandler<CreateTodoItemCommand, Void> {
 
     @Inject
-    private ToDoItemRepository toDoItemRepository;
+    private TodoItemRepository todoItemRepository;
 
     @Override
-    public Void handle(CreateToDoItemCommand command) {
-        this.toDoItemRepository.add(new ToDoItem(command.getToDoItemId(), command.getName()));
+    public Void handle(CreateTodoItemCommand command) {
+        this.todoItemRepository.add(new TodoItem(command.getTodoItemId(), command.getName()));
         return null;
     }
 }

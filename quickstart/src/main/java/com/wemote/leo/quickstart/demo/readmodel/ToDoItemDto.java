@@ -5,7 +5,7 @@ import com.wemote.leo.ddd.support.domain.AggregateId;
 /**
  * @author: jayon.xu@gmail.com
  */
-public class ToDoItemDto {
+public class TodoItemDto {
 
     private AggregateId toDoItemId;
     private String name;
@@ -14,7 +14,7 @@ public class ToDoItemDto {
         return toDoItemId;
     }
 
-    public ToDoItemDto(AggregateId toDoItemId, String name) {
+    public TodoItemDto(AggregateId toDoItemId, String name) {
         this.toDoItemId = toDoItemId;
         this.name = name;
     }

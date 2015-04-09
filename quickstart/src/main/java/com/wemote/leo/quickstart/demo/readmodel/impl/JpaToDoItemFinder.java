@@ -18,31 +18,31 @@ package com.wemote.leo.quickstart.demo.readmodel.impl;
 import com.wemote.leo.cqrs.query.PaginatedResult;
 import com.wemote.leo.ddd.annotation.domain.FinderImpl;
 import com.wemote.leo.ddd.support.domain.AggregateId;
-import com.wemote.leo.quickstart.demo.readmodel.ToDoItemDto;
-import com.wemote.leo.quickstart.demo.readmodel.ToDoItemFinder;
-import com.wemote.leo.quickstart.demo.readmodel.ToDoItemQuery;
+import com.wemote.leo.quickstart.demo.readmodel.TodoItemDto;
+import com.wemote.leo.quickstart.demo.readmodel.TodoItemFinder;
+import com.wemote.leo.quickstart.demo.readmodel.TodoItemQuery;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 @FinderImpl
-public class JpaToDoItemFinder implements ToDoItemFinder {
+public class JpaTodoItemFinder implements TodoItemFinder {
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
-    public ToDoItemDto find(AggregateId toDoItemId) {
+    public TodoItemDto find(AggregateId toDoItemId) {
 
-        TypedQuery<ToDoItemDto> query = entityManager.createQuery(
-                "SELECT o FROM ToDoItem o WHERE o.aggregateId = :aggregateId", ToDoItemDto.class);
+        TypedQuery<TodoItemDto> query = entityManager.createQuery(
+                "SELECT o FROM TodoItem o WHERE o.aggregateId = :aggregateId", TodoItemDto.class);
 
         return query.setParameter("aggregateId", toDoItemId).getSingleResult();
     }
 
     @Override
-    public PaginatedResult<ToDoItemDto> query(ToDoItemQuery toDoItemQuery) {
+    public PaginatedResult<TodoItemDto> query(TodoItemQuery toDoItemQuery) {
         return null;
     }
 }

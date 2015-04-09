@@ -7,9 +7,9 @@ import com.wemote.leo.ddd.support.domain.AggregateId;
  * @author: jayon.xu@gmail.com
  */
 @DomainRepository
-public interface ToDoItemRepository {
+public interface TodoItemRepository {
 
-    ToDoItem get(AggregateId toDoItemId);
+    TodoItem get(AggregateId todoItemId);
 
-    void add(ToDoItem toDoItem);
+    void add(TodoItem todoItem);
 }

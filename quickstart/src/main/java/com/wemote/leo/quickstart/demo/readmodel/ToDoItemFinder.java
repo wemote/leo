@@ -8,8 +8,8 @@ import com.wemote.leo.ddd.support.domain.AggregateId;
  * @author: jayon.xu@gmail.com
  */
 @Finder
-public interface ToDoItemFinder {
-    ToDoItemDto find(AggregateId toDoItemId);
+public interface TodoItemFinder {
+    TodoItemDto find(AggregateId toDoItemId);
 
-    PaginatedResult<ToDoItemDto> query(ToDoItemQuery toDoItemQuery);
+    PaginatedResult<TodoItemDto> query(TodoItemQuery toDoItemQuery);
 }
