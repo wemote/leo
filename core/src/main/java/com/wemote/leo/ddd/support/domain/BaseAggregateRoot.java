@@ -21,14 +21,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
-import javax.persistence.Version;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -42,6 +35,7 @@ public abstract class BaseAggregateRoot extends BaseEntity implements Serializab
         ARCHIVE, ACTIVE,;
     }
 
+    @Column(unique = true)
     @AttributeOverrides(value = {
             @AttributeOverride(name = "aggregateId", column = @Column(name = "aggregate_id", unique = true, nullable = false))})
     protected AggregateId aggregateId;

@@ -5,7 +5,7 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * *****************************************************************************
  */
-package com.wemote.leo.ddd.infrastructure.support.persistence;
+package com.wemote.leo.ddd.infrastructure.support.repo;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Hibernate;

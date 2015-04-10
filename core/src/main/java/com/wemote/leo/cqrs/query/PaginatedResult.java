@@ -24,7 +24,7 @@ public class PaginatedResult<T> implements Serializable {
     private final int pageSize;
     private final int pageNumber;
     private final int pagesCount;
-    private final int totalItemsCount;
+    private final long totalItemsCount;
 
     public PaginatedResult(int pageNumber, int pageSize) {
         this.pageNumber = pageNumber;
@@ -34,7 +34,7 @@ public class PaginatedResult<T> implements Serializable {
         totalItemsCount = 0;
     }
 
-    public PaginatedResult(List<T> items, int pageNumber, int pageSize, int totalItemsCount) {
+    public PaginatedResult(List<T> items, int pageNumber, int pageSize, long totalItemsCount) {
         this.items = items;
         this.pageNumber = pageNumber;
         this.pageSize = pageSize;
@@ -42,7 +42,7 @@ public class PaginatedResult<T> implements Serializable {
         this.totalItemsCount = totalItemsCount;
     }
 
-    private int countPages(int size, int itemsCount) {
+    private int countPages(int size, long itemsCount) {
         return (int) Math.ceil((double) itemsCount / size);
     }
 
@@ -62,7 +62,7 @@ public class PaginatedResult<T> implements Serializable {
         return pagesCount;
     }
 
-    public int getTotalItemsCount() {
+    public long getTotalItemsCount() {
         return totalItemsCount;
     }
 }
