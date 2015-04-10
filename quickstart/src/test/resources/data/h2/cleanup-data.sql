@@ -1,1 +1,1 @@
-delete from ToDoItem;
+delete from todo_item;

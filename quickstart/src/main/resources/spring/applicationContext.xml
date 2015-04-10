@@ -53,6 +53,11 @@
     <jpa:repositories base-package="com.wemote.leo.quickstart.demo.domain" transaction-manager-ref="transactionManager"
                       entity-manager-factory-ref="entityManagerFactory"/>
 
+    <jpa:repositories base-package="com.wemote.leo.quickstart.demo.readmodel"
+                      transaction-manager-ref="transactionManager"
+                      entity-manager-factory-ref="entityManagerFactory"
+                      factory-class="com.wemote.leo.ddd.infrastructure.support.repo.MyBaseRepositoryFactoryBean"/>
+
     <!-- Jpa 事务配置 -->
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
           p:entityManagerFactory-ref="entityManagerFactory"/>
@@ -75,7 +80,7 @@
 
     <bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
         <property name="databasePlatform">
-            <bean factory-method="getDialect" class="com.wemote.leo.ddd.infrastructure.support.persistence.Hibernates">
+            <bean factory-method="getDialect" class="com.wemote.leo.ddd.infrastructure.support.repo.Hibernates">
                 <constructor-arg ref="dataSource"/>
             </bean>
         </property>
@@ -175,6 +180,6 @@
         </jdbc:initialize-database>
     </beans>
 
-    <!-- import shiro model -->
+    <!-- import shiro module -->
     <!--<import resource="spring-shiro.xml"/>-->
 </beans>
