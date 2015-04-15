@@ -7,6 +7,9 @@
 
     <description>Shiro安全配置</description>
 
+    <!-- 开启AOP监听 只对当前配置文件有效 -->
+    <aop:aspectj-autoproxy expose-proxy="true"/>
+
     <!-- 缓存管理器 -->
     <bean id="springCacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
         <property name="cacheManager" ref="ehcacheManager"/>
@@ -23,8 +26,13 @@
         <property name="cacheManagerConfigFile" value="classpath:ehcache-shiro.xml"/>
     </bean>-->
 
+    <!-- 缓存管理器 -->
+    <bean id="cacheManager" class="com.wemote.leo.quickstart.util.SpringCacheManagerWrapper">
+        <property name="cacheManager" ref="springCacheManager"/>
+    </bean>
+
     <!-- 凭证匹配器 -->
-    <bean id="credentialsMatcher" class="com.data3.my.security.shiro.credentials.RetryLimitHashedCredentialsMatcher">
+    <bean id="credentialsMatcher" class="com.wemote.leo.quickstart.account.domain.RetryLimitHashedCredentialsMatcher">
         <constructor-arg ref="cacheManager"/>
         <property name="hashAlgorithmName" value="${password.algorithmName}"/>
         <property name="hashIterations" value="${password.hashIterations}"/>
@@ -34,7 +42,7 @@
     <!-- Define the Shiro Realm implementation you want to use to connect to your back-end -->
     <!-- security datasource: -->
     <!-- Define the realm you want to use to connect to your back-end security datasource: -->
-    <bean id="myRealm" class="com.data3.my.security.shiro.realm.MyRealm">
+    <bean id="myRealm" class="com.wemote.leo.quickstart.account.domain.MyRealm">
         <property name="credentialsMatcher" ref="credentialsMatcher"/>
         <property name="cachingEnabled" value="false"/>
     </bean>
@@ -161,8 +169,6 @@
         <property name="securityManager" ref="securityManager"/>
     </bean>
 
-    <!-- 开启AOP监听 只对当前配置文件有效 -->
-    <aop:aspectj-autoproxy expose-proxy="true"/>
     <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager"/>
     </bean>
