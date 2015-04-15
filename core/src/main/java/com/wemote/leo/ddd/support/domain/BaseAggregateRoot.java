@@ -15,13 +15,20 @@
  */
 package com.wemote.leo.ddd.support.domain;
 
-import com.data3.util.DateUtils;
 import com.wemote.leo.ddd.support.exception.DomainOperationException;
+import com.wemote.scorpio.modules.utils.Dates;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
-import javax.persistence.*;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
+import javax.persistence.Version;
 import java.io.Serializable;
 
 /**
@@ -55,7 +62,7 @@ public abstract class BaseAggregateRoot extends BaseEntity implements Serializab
     protected DomainEventPublisher eventPublisher;
 
     protected BaseAggregateRoot() {
-        this.createTime = Long.valueOf(DateUtils.getCurrentSeconds());
+        this.createTime = Long.valueOf(Dates.getCurrentSeconds());
     }
 
     public void markAsRemoved() {
