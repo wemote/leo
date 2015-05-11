@@ -11,6 +11,8 @@
 
     <artifactId>leo-infrastructure</artifactId>
 
+    <name>Leo Infrastructure</name>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>

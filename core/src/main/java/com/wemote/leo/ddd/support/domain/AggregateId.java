@@ -15,11 +15,11 @@
  */
 package com.wemote.leo.ddd.support.domain;
 
+import com.wemote.scorpio.modules.utils.Identities;
 import org.apache.commons.lang3.Validate;
 
 import javax.persistence.Embeddable;
 import java.io.Serializable;
-import java.util.UUID;
 
 @SuppressWarnings({"serial", "JpaAttributeMemberSignatureInspection"})
 @Embeddable
@@ -33,6 +33,7 @@ public class AggregateId implements Serializable {
     }
 
     protected AggregateId() {
+        this.aggregateId = Identities.uuid();
     }
 
     public String getId() {
@@ -72,6 +73,6 @@ public class AggregateId implements Serializable {
     }
 
     public static AggregateId generate() {
-        return new AggregateId(UUID.randomUUID().toString());
+        return new AggregateId(Identities.uuid());
     }
 }

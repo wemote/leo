@@ -10,6 +10,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>leo-quickstart</artifactId>
+    <packaging>war</packaging>
+
+    <name>Leo QuickStart</name>
 
     <dependencies>
         <!-- My start -->
@@ -229,7 +232,7 @@
                     </webAppConfig>
                     <connectors>
                         <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-                            <port>9001</port>
+                            <port>9901</port>
                             <maxIdleTime>60000</maxIdleTime>
                         </connector>
                     </connectors>

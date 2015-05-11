@@ -11,6 +11,8 @@
 
     <artifactId>leo-core</artifactId>
 
+    <name>Leo Core</name>
+
     <dependencies>
         <!-- Spring framework start -->
         <dependency>

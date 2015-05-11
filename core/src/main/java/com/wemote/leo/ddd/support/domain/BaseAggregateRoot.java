@@ -21,14 +21,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
-import javax.persistence.Version;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -38,23 +31,24 @@ import java.io.Serializable;
 @Scope("prototype")//created in domain factories, not in spring container, therefore we don't want eager creation
 @MappedSuperclass
 public abstract class BaseAggregateRoot extends BaseEntity implements Serializable {
+
     public static enum AggregateStatus {
         ARCHIVE, ACTIVE,;
     }
 
-    @Column(unique = true)
     @AttributeOverrides(value = {
-            @AttributeOverride(name = "aggregateId", column = @Column(name = "aggregate_id", unique = true, nullable = false))})
+            @AttributeOverride(name = "aggregateId", column = @Column(name = "aggregate_id", updatable = false, length = 64, unique = true, nullable = false))})
     protected AggregateId aggregateId;
 
     @Version
+    @Column(nullable = false)
     private Long version;
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(name = "status")
+    @Column(name = "status", length = 5, nullable = false)
     private AggregateStatus aggregateStatus = AggregateStatus.ACTIVE;
 
-    @Column(name = "create_time")
+    @Column(name = "create_time", nullable = false)
     private Long createTime;
 
     @Transient
