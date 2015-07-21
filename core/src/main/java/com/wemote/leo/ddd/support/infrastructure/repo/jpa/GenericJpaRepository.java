@@ -50,7 +50,6 @@ public abstract class GenericJpaRepository<A extends BaseAggregateRoot> {
         this.clazz = ((Class<A>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
     }
 
-    @Transactional(propagation = Propagation.SUPPORTS)
     public A get(AggregateId id) {
 
         TypedQuery<A> query = entityManager.createQuery(
