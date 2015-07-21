@@ -15,6 +15,8 @@
  */
 package com.wemote.leo.ddd.support.domain;
 
+import com.google.common.base.Objects;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
@@ -32,5 +34,18 @@ public abstract class BaseEntity implements Serializable {
 
     protected Long getSid() {
         return sid;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BaseEntity that = (BaseEntity) o;
+        return Objects.equal(sid, that.sid);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(sid);
     }
 }
