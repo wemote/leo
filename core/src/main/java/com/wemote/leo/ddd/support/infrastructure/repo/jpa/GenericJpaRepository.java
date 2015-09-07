@@ -57,7 +57,8 @@ public abstract class GenericJpaRepository<A extends BaseAggregateRoot> {
 
         A aggregate = query.setParameter("aggregateId", id).getSingleResult();
 
-        LOGGER.debug("Aggregate lock mode:[{}]", entityManager.getLockMode(aggregate));
+        //want getLockMode must annotation Transactional
+        //LOGGER.debug("Aggregate lock mode:[{}]", entityManager.getLockMode(aggregate));
 
         //lock to be sure when creating other objects based on values of this aggregate
         //A aggregate = entityManager.find(clazz, id, LockModeType.OPTIMISTIC);
